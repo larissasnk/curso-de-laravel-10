@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Support;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\FuncCall;
 
 class SupportController extends Controller
 {
@@ -64,6 +65,16 @@ class SupportController extends Controller
             'subject',
             'body'
         ]));
+
+        return redirect()->route('supports.index');
+    }
+
+    public function destroy(string|int $id)
+    {
+        if (!$support = Support::find($id)) {
+            return back();
+        }
+        $support->delete();
 
         return redirect()->route('supports.index');
     }
